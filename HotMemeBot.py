@@ -1,8 +1,14 @@
-import Tweepy, time
+import tweepy
+import twitterkeys
 
 
-## Create a twitter bot that will post a random meme from a youtube playlist every 24 hours
 
-# Create a twitter account and get the API keys from https://developer.twitter.com/en/apps
-# Create a youtube playlist and get the playlist ID from the URL
+client = tweepy.Client(consumer_key=twitterkeys.api_key,
+                        consumer_secret=twitterkeys.api_secret,
+                        access_token=twitterkeys.access_token,
+                        access_token_secret=twitterkeys.access_token_secret)
+
+response = client.create_tweet(text = "Hello, world!")
+print(response)
+
 
