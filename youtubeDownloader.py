@@ -1,44 +1,18 @@
-import pytube
+from pytube import YouTube, Playlist
+import random
 
-def download_video(url, resolution):
-    itag = choose_resolution(resolution)
-    video = pytube.YouTube(url)
-    stream = video.streams.get_by_itag(itag)
-    stream.download()
-    return stream.default_filename
+def downloadVideo():
+    p = Playlist("https://www.youtube.com/playlist?list=PLheJxfe3aFemNZE60tdeu4mhCx2ExRd7I")
+    playedVideos = []
 
-def download_videos(urls, resolution):
-    for url in urls:
-        download_video(url, resolution)
-
-def download_playlist(url, resolution):
-    playlist = pytube.Playlist(url)
-    download_videos(playlist.video_urls, resolution)
-
-def choose_resolution(resolution):
-    if resolution in ["low", "360", "360p"]:
-        itag = 18
-    elif resolution in ["medium", "720", "720p", "hd"]:
-        itag = 22
-    elif resolution in ["high", "1080", "1080p", "fullhd", "full_hd", "full hd"]:
-        itag = 137
-    elif resolution in ["very high", "2160", "2160p", "4K", "4k"]:
-        itag = 313
-    else:
-        itag = 18
-    return itag
+    video = random.choice(p.video_urls)
+    if video not in playedVideos:
+        playedVideos.append(video)
+        YouTube(video).streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first().download()
+        print(video)
+        print()
+        print(playedVideos)
 
 
-def input_links():
-    print("Enter the links of the videos (end by entering 'STOP'):")
 
-    links = []
-    link = ""
 
-    while link != "STOP" and link != "stop":
-        link = input()
-        links.append(link)
-
-    links.pop()
-
-    return links
