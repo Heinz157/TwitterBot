@@ -74,18 +74,10 @@ api = tweepy.API(auth)
 
 
 # Timer
-#schedule.every().day.at("12:00").do(tweet) 
+schedule.every().day.at("12:00").do(tweet) 
 
-#while True:
-#    schedule.run_pending()
-#    time.sleep(60)
-
-
+while True:
+    schedule.run_pending()
+    time.sleep(60)
 
 
-for _ in range(5):
-    try:
-        tweet()
-        time.sleep(1)
-    except:
-        pass
